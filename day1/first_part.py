@@ -17,6 +17,3 @@ def count_max_calories():
         elif re.match('\d+\n', cal):
             cal_total += int((re.search('^(\d+)\n$', cal)).group())
     return cal_max
-
-if __name__ == '__main__':
-    count_max_calories()
