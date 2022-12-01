@@ -3,3 +3,4 @@ aoc/
 
 .vscode/
 .env
+*.class
