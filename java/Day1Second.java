@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-class Day1Second {
+public class Day1Second {
     public static void main(String[] args) throws FileNotFoundException {
         File input = new File("../input/day1.txt");
         Scanner calories = new Scanner(input);
