@@ -2,7 +2,7 @@ import re
 
 
 def _get_input():
-    with open('../input/day1.txt', 'r') as data:
+    with open('./input/day1.txt', 'r') as data:
         return (cal for cal in data.readlines())
     
     
