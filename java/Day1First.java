@@ -22,3 +22,4 @@ public class Day1First {
         System.out.println(cal_max);
         }
     }
+    
