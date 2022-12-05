@@ -27,4 +27,3 @@ public class Day2Second {
         System.out.println(total);
     }
 }
-
