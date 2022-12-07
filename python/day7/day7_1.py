@@ -1,17 +1,38 @@
 import re
 from classes import Reader, Directory
 
+def sum_file_sizes():
+    file = Reader('./input/day7.txt')
+    dirs = {}
 
-file = Reader('./input/day7.txt')
-
-for command in file.data:
-    if command.startswith('$ cd'):
-        print(command)
-        dir_name = re.search('[\w./]{1,}$', command)
-        Directory.change_dir(dir_name.group())
-            
-    elif re.match('\d+\s[\w.]*', command):
-        print(command)
-        size, file = re.findall('(\d+)\s([\w.]+)', command.strip())[0]
-        Directory.add_file(file, size)
+    for command in file.data:
+        if command.startswith('$ cd'):
+            search_result = re.search('[\w./]{1,}$', command.strip())
+            dir_name = search_result.group()
+            full_dir = Directory.find_directory(dir_name)
+            if dir_name == '..':
+                Directory.go_up()
+                
+            elif full_dir in dirs.keys():
+                Directory.go_down(dirs[full_dir])
+                
+            else:
+                dir_obj = Directory(full_dir)
+                dirs.update({dir_obj.name: dir_obj})
+                Directory.go_down(dir_obj)
+                
+        elif re.match('\d+\s[\w.]*', command):
+            size, file = re.findall('(\d+)\s([\w.]+)', command.strip())[0]
+            Directory.add_file(file, size)
+        
+    sizes = []
+    for directory in dirs.values():
+        dir_size = directory.count_dir_size()
+        sizes.append(dir_size)
+    
+    result = sum([x for x in sizes if x <= 100000])
+    print(result)
+    
+if __name__ == "__main__":
+    sum_file_sizes()
     
