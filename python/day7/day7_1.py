@@ -36,5 +36,3 @@ def add_sizes():
 
 if __name__ == '__main__':
     add_sizes()
-
-
