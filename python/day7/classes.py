@@ -10,22 +10,27 @@ class Reader:
     
 
 class Directory:
-    dir_objs = {}
     current_dir = None
     
     def __init__(self, name):
+        self.parent = Directory.current_dir
         self.name = name
         self.files = {}
         self.subs = []
-        Directory.dir_objs[name] = self
-        if Directory.current_dir is not None:
-            self.parent = Directory.current_dir
+        if self.parent is not None:
             self.add_to_parent(self)
 
         
     def add_to_parent(self, directory):
         self.parent.subs.append(directory)
-             
+        
+     
+    @classmethod   
+    def find_directory(cls, name):
+        return f'{cls.current_dir.name}/{name}' \
+                if cls.current_dir is not None \
+                else name
+                
              
     @classmethod        
     def add_file(cls, name, size):
@@ -34,12 +39,22 @@ class Directory:
             
             
     @classmethod
-    def change_dir(cls, directory):
-        if directory == '..':
-            cls.current_dir = cls.current_dir.parent
-            print(cls.current_dir.parent.name, cls.current_dir.name)
-        else:
-            if directory not in cls.dir_objs.keys():
-                obj = cls(directory)
-            cls.current_dir = cls.dir_objs[directory]
+    def go_up(cls):
+        cls.current_dir = cls.current_dir.parent
+            
+            
+    @classmethod
+    def go_down(cls, directory):
+            cls.current_dir = directory
     
+    
+    def count_dir_size(self, total=0):
+        if total > 100000: return 0
+        elif self.subs:
+            for sub in self.subs:
+                total += sub.count_dir_size()
+            return total
+        else:
+            return sum(self.files.values())
+            
+        
