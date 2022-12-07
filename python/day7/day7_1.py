@@ -1,6 +1,7 @@
 import re
 from classes import Reader, Directory
 
+
 def sum_file_sizes():
     file = Reader('./input/day7.txt')
     dirs = {}
