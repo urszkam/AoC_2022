@@ -1,39 +1,40 @@
-import re
-from classes import Reader, Directory
+def add_sizes():
 
-
-def sum_file_sizes():
-    file = Reader('./input/day7.txt')
-    dirs = {}
-
-    for command in file.data:
-        if command.startswith('$ cd'):
-            search_result = re.search('[\w./]{1,}$', command.strip())
-            dir_name = search_result.group()
-            full_dir = Directory.find_directory(dir_name)
-            if dir_name == '..':
-                Directory.go_up()
-                
-            elif full_dir in dirs.keys():
-                Directory.go_down(dirs[full_dir])
-                
-            else:
-                dir_obj = Directory(full_dir)
-                dirs.update({dir_obj.name: dir_obj})
-                Directory.go_down(dir_obj)
-                
-        elif re.match('\d+\s[\w.]*', command):
-            size, file = re.findall('(\d+)\s([\w.]+)', command.strip())[0]
-            Directory.add_file(file, size)
+    with open('./input/day7.txt', 'r') as input_data:
+        commands = input_data.readlines()
         
+    current = '/'
+    dirs = {}
+    total = 0
+    for command in commands[1:]:
+        
+        if command.startswith('$ cd'):
+            dir_name = command.strip().rsplit(' ', 1)[-1]
+            if current not in dirs.keys():
+                dirs[current] = total
+                total = 0
+            
+            if dir_name == '..':
+                current = current.rsplit('/', 1)[0]
+            
+            else:        
+                current = f'{current}/{dir_name}'
+                
+        elif command[0].isdigit():
+            size = command.split(' ', 1)[0]
+            total += int(size)
+            
+    dirs[current] = total
     sizes = []
-    for directory in dirs.values():
-        dir_size = directory.count_dir_size()
-        sizes.append(dir_size)
     
-    result = sum([x for x in sizes if x <= 100000])
-    print(result)
-    
-if __name__ == "__main__":
-    sum_file_sizes()
-    
+    for directory in dirs.keys():
+        size_sum = sum([v for k,v in dirs.items() if k.startswith(directory)])
+        sizes.append(size_sum if size_sum <= 100000 else 0)
+
+    return sum(sizes)
+        
+
+if __name__ == '__main__':
+    add_sizes()
+
+
