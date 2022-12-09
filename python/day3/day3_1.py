@@ -13,11 +13,11 @@ def get_priorities():
     
     for component in components:
         component = component.strip('\n')
-        mid = len(component)//2
         
+        mid = len(component) // 2
         item = set(component[:mid]).intersection(set(component[mid:]))
         item = item.pop()
         
-        total += chars.index(item)+1
         
+        total += chars.index(item) + 1
     return total
