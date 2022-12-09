@@ -3,9 +3,7 @@ import re
 
 def find_distance(pattern, trees):
     search_result = re.search(pattern, trees)
-    return len(trees) \
-            if search_result is None  \
-            else search_result.start() + 1
+    return len(trees) if search_result is None else search_result.start() + 1
 
 
 def find_max_view():
@@ -19,12 +17,15 @@ def find_max_view():
      
     for r in range(len(trees_rows)):
         for col in range(len(trees_columns)):
-            
-            if col == 0 or r == 0 or \
-               col ==  len(trees_rows)-1 or \
-               r == len(trees_rows)-1:
-                   continue
-               
+
+            if (
+                col == 0
+                or r == 0
+                or col == len(trees_rows) - 1
+                or r == len(trees_rows) - 1
+            ):
+                continue
+
             tree = trees_rows[r][col]
             pattern = re.compile(f'[{tree}-9]')
             
