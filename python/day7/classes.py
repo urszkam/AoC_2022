@@ -20,24 +20,12 @@ class Directory:
         if self.parent is not None:
             self.add_to_parent(self)
 
-        
     def add_to_parent(self, directory):
         self.parent.subs.append(directory)
-        
-     
-    @classmethod   
+
+    @classmethod
     def find_directory(cls, name):
-        return f'{cls.current_dir.name}/{name}' \
-                if cls.current_dir is not None \
-                else name
-                
-             
-    @classmethod        
-    def add_file(cls, name, size):
-        if name not in cls.current_dir.files.keys():
-            cls.current_dir.files[name] = int(size)
-            
-            
+        return f"{cls.current_dir.name}/{name}" if cls.current_dir is not None else name
     @classmethod
     def go_up(cls):
         cls.current_dir = cls.current_dir.parent
