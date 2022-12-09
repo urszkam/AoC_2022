@@ -14,18 +14,20 @@ def count_trees():
     for r in range(len(trees_rows)):
         for c in range(len(trees_columns)):
             tree = trees_rows[r][c]
-            
-            if c == 0 or r == 0 or \
-               c ==  len(trees_rows)-1 or \
-               r == len(trees_rows)-1:
-                   total += 1
-               
-            elif tree > max(trees_rows[r][:c]) or tree >max(trees_rows[r][c+1:]) or \
-                 tree > max(trees_columns[c][:r]) or tree > max(trees_columns[c][r+1:]):
-                    total += 1
+
+            if c == 0 or r == 0 or c == len(trees_rows) - 1 or r == len(trees_rows) - 1:
+                total += 1
+
+            elif (
+                tree > max(trees_rows[r][:c])
+                or tree > max(trees_rows[r][c + 1 :])
+                or tree > max(trees_columns[c][:r])
+                or tree > max(trees_columns[c][r + 1 :])
+            ):
+                total += 1
 
     return total
-    
+
 
 if __name__ == "__main__":
     count_trees()
