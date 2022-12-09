@@ -15,7 +15,7 @@ class Directory:
     def __init__(self, name):
         self.parent = Directory.current_dir
         self.name = name
-        self.files = {}
+        self.files = 0
         self.subs = []
         if self.parent is not None:
             self.add_to_parent(self)
@@ -26,6 +26,11 @@ class Directory:
     @classmethod
     def find_directory(cls, name):
         return f"{cls.current_dir.name}/{name}" if cls.current_dir is not None else name
+
+    @classmethod
+    def add_file(cls, size):
+        cls.current_dir.files += int(size)
+
     @classmethod
     def go_up(cls):
         cls.current_dir = cls.current_dir.parent
@@ -37,12 +42,11 @@ class Directory:
     
     
     def count_dir_size(self, total=0):
-        if total > 100000: return 0
+        if total > 100000:
+            return 0
         elif self.subs:
             for sub in self.subs:
                 total += sub.count_dir_size()
-            return total
+            return total + self.files
         else:
-            return sum(self.files.values())
-            
-        
+            return self.files
