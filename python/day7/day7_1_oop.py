@@ -13,10 +13,7 @@ def sum_file_sizes():
             full_dir = Directory.find_directory(dir_name)
             if dir_name == '..':
                 Directory.go_up()
-                
-            elif full_dir in dirs.keys():
-                Directory.go_down(dirs[full_dir])
-                
+
             else:
                 dir_obj = Directory(full_dir)
                 dirs.update({dir_obj.name: dir_obj})
