@@ -29,13 +29,14 @@ def sum_file_sizes():
             Directory.add_file(size)
 
     sizes = {}
-    for k,directory in dirs.items():
+    for key, directory in dirs.items():
         dir_size = directory.count_dir_size()
-        sizes.update({k: dir_size})
-    
+        sizes.update({key: dir_size})
+
     result = sum([x for x in sizes.values() if x <= 100000])
-    print(sizes)
-    
+
+    return result
+
+
 if __name__ == "__main__":
     sum_file_sizes()
-    
